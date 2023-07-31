@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "479702387333",
+    "project_id": "vinhome-e51b5",
+    "storage_bucket": "vinhome-e51b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479702387333:android:94abf59c8d8f8faa09b7ec",
+        "android_client_info": {
+          "package_name": "com.example.store_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479702387333-5qsg5rf05numjnb3s9rat5qgtjs6k47r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.store_app",
+            "certificate_hash": "8c2d40762d4c6f13e45ece91b3841e352e4b1fbb"
+          }
+        },
+        {
+          "client_id": "479702387333-njkph4nsg6s2hf3i59n5tt0jrabmh8vj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG5NWC38jrlYGauDJ7rcn3EVJYviU-04o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479702387333-njkph4nsg6s2hf3i59n5tt0jrabmh8vj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
