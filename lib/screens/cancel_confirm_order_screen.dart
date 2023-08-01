@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:slide_to_act/slide_to_act.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CancelConfirmOrderScreen extends StatefulWidget {
@@ -142,40 +141,40 @@ class _CancelConfirmOrderScreenState extends State<CancelConfirmOrderScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height - 505,
-                  child: SlideAction(
-                    alignment: Alignment.bottomCenter,
-                    textStyle: TextStyle(
-                        fontSize: 18,
-                        fontFamily: "SF Bold",
-                        color: Colors.white),
-                    // innerColor: Color.fromRGBO(219, 98, 71, 1),
-                    outerColor: Color.fromRGBO(219, 98, 71, 1),
-                    text: "Xác nhận hủy",
-                    height: 55,
-                    sliderButtonIconSize: 27,
-                    sliderRotate: false,
-                    sliderButtonIconPadding: 10,
-                    sliderButtonYOffset: -3,
-                    onSubmit: () {
-                      Future.delayed(
-                        Duration(milliseconds: 500),
-                        () => {
-                          Navigator.pop(context),
-                          Fluttertoast.showToast(
-                              msg: "Đơn hàng của bạn đã hủy thành công.",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.green,
-                              textColor: Colors.white,
-                              fontSize: 16.0),
-                        },
-                      );
-                    },
-                  ),
-                )
+                // Container(
+                //   height: MediaQuery.of(context).size.height - 505,
+                //   child: SlideAction(
+                //     alignment: Alignment.bottomCenter,
+                //     textStyle: const TextStyle(
+                //         fontSize: 18,
+                //         fontFamily: "SF Bold",
+                //         color: Colors.white),
+                //     // innerColor: Color.fromRGBO(219, 98, 71, 1),
+                //     outerColor: Color.fromRGBO(219, 98, 71, 1),
+                //     text: "Xác nhận hủy",
+                //     height: 55,
+                //     sliderButtonIconSize: 27,
+                //     sliderRotate: false,
+                //     sliderButtonIconPadding: 10,
+                //     sliderButtonYOffset: -3,
+                //     onSubmit: () {
+                //       Future.delayed(
+                //         Duration(milliseconds: 500),
+                //         () => {
+                //           Navigator.pop(context),
+                //           Fluttertoast.showToast(
+                //               msg: "Đơn hàng của bạn đã hủy thành công.",
+                //               toastLength: Toast.LENGTH_SHORT,
+                //               gravity: ToastGravity.TOP,
+                //               timeInSecForIosWeb: 1,
+                //               backgroundColor: Colors.green,
+                //               textColor: Colors.white,
+                //               fontSize: 16.0),
+                //         },
+                //       );
+                //     },
+                //   ),
+                // )
               ],
             ),
           )),

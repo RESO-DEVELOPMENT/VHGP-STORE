@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "479702387333",
-    "project_id": "vinhome-e51b5",
-    "storage_bucket": "vinhome-e51b5.appspot.com"
+    "project_number": "933202759364",
+    "project_id": "vhgp-9b167",
+    "storage_bucket": "vhgp-9b167.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:479702387333:android:94abf59c8d8f8faa09b7ec",
+        "mobilesdk_app_id": "1:933202759364:android:836cbc9b9db46ecf9ec391",
         "android_client_info": {
           "package_name": "com.example.store_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "479702387333-5qsg5rf05numjnb3s9rat5qgtjs6k47r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.store_app",
-            "certificate_hash": "8c2d40762d4c6f13e45ece91b3841e352e4b1fbb"
-          }
-        },
-        {
-          "client_id": "479702387333-njkph4nsg6s2hf3i59n5tt0jrabmh8vj.apps.googleusercontent.com",
+          "client_id": "933202759364-o5ml8smpis57cq41mesdl4p6jcipjeq4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDG5NWC38jrlYGauDJ7rcn3EVJYviU-04o"
+          "current_key": "AIzaSyCerZsxXfs8Ol5jPn5AAY9Mu58SIxMlF-I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "479702387333-njkph4nsg6s2hf3i59n5tt0jrabmh8vj.apps.googleusercontent.com",
+              "client_id": "933202759364-fahu2jvf52cpjno6luk82vtpl45d9mpo.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
