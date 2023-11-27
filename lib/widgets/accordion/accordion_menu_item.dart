@@ -7,6 +7,11 @@ import 'package:store_app/apis/apiService.dart';
 import 'package:store_app/constants/Theme.dart';
 import 'package:store_app/screens/profile_screen.dart';
 import 'package:material_dialogs/material_dialogs.dart';
+import 'package:get/get.dart';
+import 'package:store_app/models/cartModel.dart';
+
+// import '../common/color.dart';
+import 'package:store_app/provider/appProvider.dart';
 
 class AccordionMenuItem extends StatefulWidget {
   String name;
@@ -16,8 +21,20 @@ class AccordionMenuItem extends StatefulWidget {
   bool isBorder;
   bool isActiveStore;
   Function callBack;
-  AccordionMenuItem({Key? key, required this.name, required this.callBack, required this.price, required this.isBorder, required this.image, required this.isActive, required this.isActiveStore})
-      : super(key: key);
+  // String imageUrl;
+  // String imageBuilder;
+  AccordionMenuItem({
+    Key? key,
+    required this.name,
+    required this.callBack,
+    required this.price,
+    required this.isBorder,
+    required this.image,
+    required this.isActive,
+    required this.isActiveStore,
+    // required this.imageUrl,
+    // required this.imageUrl
+  }) : super(key: key);
 
   @override
   _AccordionMenuItemState createState() => _AccordionMenuItemState();
@@ -44,7 +61,10 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
         // msgAlign: TextAlign.center,
         // title: "Xóa sản phẩm",
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.0),
+                topRight: Radius.circular(10.0))),
         // isDismissible: true,
         // color: Colors.white,
         context: context,
@@ -73,7 +93,8 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                           margin: EdgeInsets.only(right: 15),
                           width: 80,
                           child: Container(
-                              decoration: const BoxDecoration(color: Colors.white),
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
                               // padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                               width: MediaQuery.of(context).size.width,
                               child: SizedBox(
@@ -87,11 +108,25 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                                       // padding: const EdgeInsets.symmetric(vertical: 5),
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                          boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                                          gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Colors.redAccent, Colors.red])),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                                color: Colors.grey.shade200,
+                                                offset: const Offset(2, 4),
+                                                blurRadius: 5,
+                                                spreadRadius: 2)
+                                          ],
+                                          gradient: const LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              colors: [
+                                                Colors.redAccent,
+                                                Colors.red
+                                              ])),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.delete,
@@ -137,7 +172,8 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                                       Padding(padding: EdgeInsets.all(2)),
                                       Text(
                                         "*",
-                                        style: TextStyle(color: Colors.red, fontSize: 16),
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 16),
                                       )
                                     ],
                                   ),
@@ -172,7 +208,8 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                                       Padding(padding: EdgeInsets.all(2)),
                                       Text(
                                         "*",
-                                        style: TextStyle(color: Colors.red, fontSize: 16),
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 16),
                                       )
                                     ],
                                   ),
@@ -205,84 +242,115 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                         )),
                       ],
                     ),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      SizedBox(width: 15),
-                      Expanded(
-                        child: Container(
-                            decoration: const BoxDecoration(color: Colors.white),
-                            // padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                            width: MediaQuery.of(context).size.width,
-                            child: SizedBox(
-                              height: 38,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  // padding: const EdgeInsets.symmetric(vertical: 5),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                      boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                                      gradient:
-                                          const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color.fromRGBO(220, 220, 220, 1), Color.fromRGBO(200, 200, 200, 1)])),
-                                  child: const Text(
-                                    'Đóng',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black54,
-                                      height: 1,
-                                      fontFamily: "SF SemiBold",
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(width: 15),
+                          Expanded(
+                            child: Container(
+                                decoration:
+                                    const BoxDecoration(color: Colors.white),
+                                // padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                                width: MediaQuery.of(context).size.width,
+                                child: SizedBox(
+                                  height: 38,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      // padding: const EdgeInsets.symmetric(vertical: 5),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                                color: Colors.grey.shade200,
+                                                offset: const Offset(2, 4),
+                                                blurRadius: 5,
+                                                spreadRadius: 2)
+                                          ],
+                                          gradient: const LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              colors: [
+                                                Color.fromRGBO(
+                                                    220, 220, 220, 1),
+                                                Color.fromRGBO(200, 200, 200, 1)
+                                              ])),
+                                      child: const Text(
+                                        'Đóng',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black54,
+                                          height: 1,
+                                          fontFamily: "SF SemiBold",
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )),
-                      ),
-                      SizedBox(width: 15),
-                      Expanded(
-                        child: Container(
-                            decoration: const BoxDecoration(color: Colors.white),
-                            // padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                            width: MediaQuery.of(context).size.width,
-                            child: SizedBox(
-                              height: 38,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  if (_formKey.currentState!.validate()) {}
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  // padding: const EdgeInsets.symmetric(vertical: 5),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                      boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                                      gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)])),
-                                  child: const Text(
-                                    'Cập nhật',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      height: 1,
-                                      fontFamily: "SF SemiBold",
+                                )),
+                          ),
+                          SizedBox(width: 15),
+                          Expanded(
+                            child: Container(
+                                decoration:
+                                    const BoxDecoration(color: Colors.white),
+                                // padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                                width: MediaQuery.of(context).size.width,
+                                child: SizedBox(
+                                  height: 38,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      if (_formKey.currentState!.validate()) {}
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      // padding: const EdgeInsets.symmetric(vertical: 5),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                                color: Colors.grey.shade200,
+                                                offset: const Offset(2, 4),
+                                                blurRadius: 5,
+                                                spreadRadius: 2)
+                                          ],
+                                          gradient: const LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              colors: [
+                                                MaterialColors.primary,
+                                                Color(0xfff7892b)
+                                              ])),
+                                      child: const Text(
+                                        'Cập nhật',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          height: 1,
+                                          fontFamily: "SF SemiBold",
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )),
-                      ),
-                      SizedBox(width: 15),
-                    ]),
+                                )),
+                          ),
+                          SizedBox(width: 15),
+                        ]),
                   ])));
         });
   }
 
   dialogDelete() {
     return Dialogs.materialDialog(
-        dialogShape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        dialogShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
         msg: 'Bạn có chắc muốn xóa sản phẩm khỏi thực đơn?',
         msgAlign: TextAlign.center,
         title: "Xóa sản phẩm",
@@ -304,9 +372,22 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                       // padding: const EdgeInsets.symmetric(vertical: 5),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(8)),
-                          boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                          gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color.fromRGBO(220, 220, 220, 1), Color.fromRGBO(200, 200, 200, 1)])),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: Colors.grey.shade200,
+                                offset: const Offset(2, 4),
+                                blurRadius: 5,
+                                spreadRadius: 2)
+                          ],
+                          gradient: const LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Color.fromRGBO(220, 220, 220, 1),
+                                Color.fromRGBO(200, 200, 200, 1)
+                              ])),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -346,9 +427,19 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                       // padding: const EdgeInsets.symmetric(vertical: 5),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
-                          boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                          gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Colors.redAccent, Colors.red])),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: Colors.grey.shade200,
+                                offset: const Offset(2, 4),
+                                blurRadius: 5,
+                                spreadRadius: 2)
+                          ],
+                          gradient: const LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [Colors.redAccent, Colors.red])),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -376,8 +467,10 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
 
   dialogConfirm() {
     return Dialogs.materialDialog(
-        dialogShape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-        msg: 'Vui lòng chuyển trạng thái cửa hàng sang tạm đóng và thử lại',
+        dialogShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        msg:
+            'Vui lòng chuyển trạng thái cửa hàng sang tạm đóng và thử lại',
         msgAlign: TextAlign.center,
         title: "Bạn muốn chỉnh sửa sản phẩm?",
         color: Colors.white,
@@ -407,9 +500,22 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                     // padding: const EdgeInsets.symmetric(vertical: 5),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(8)),
-                        boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                        gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)])),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Colors.grey.shade200,
+                              offset: const Offset(2, 4),
+                              blurRadius: 5,
+                              spreadRadius: 2)
+                        ],
+                        gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              MaterialColors.primary,
+                              Color(0xfff7892b)
+                            ])),
                     child: const Text(
                       'Đóng',
                       style: TextStyle(
@@ -438,7 +544,11 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 20, bottom: 20),
-      decoration: widget.isBorder ? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black12, width: 1))) : null,
+      decoration: widget.isBorder
+          ? BoxDecoration(
+              border:
+                  Border(bottom: BorderSide(color: Colors.black12, width: 1)))
+          : null,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -487,12 +597,18 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
                     Padding(padding: EdgeInsets.all(3)),
                     Text(
                       widget.price + "đ",
-                      style: TextStyle(fontFamily: "SF Medium", fontSize: 15, color: Colors.black45),
+                      style: TextStyle(
+                          fontFamily: "SF Medium",
+                          fontSize: 15,
+                          color: Colors.black45),
                     ),
                     Padding(padding: EdgeInsets.all(3)),
                     Text(
                       "Chỉnh sửa",
-                      style: TextStyle(fontFamily: "SF Medium", fontSize: 13, color: Color.fromRGBO(24, 144, 255, 1)),
+                      style: TextStyle(
+                          fontFamily: "SF Medium",
+                          fontSize: 13,
+                          color: Color.fromRGBO(24, 144, 255, 1)),
                     ),
                   ],
                 ),
@@ -506,28 +622,102 @@ class _AccordionMenuItemState extends State<AccordionMenuItem> {
               ))
             ],
           )),
-          Container(
-            child: FlutterSwitch(
-              width: 50.0,
-              height: 25.0,
-              valueFontSize: 15.0,
-              toggleSize: 17.0,
-              value: status,
-              borderRadius: 30.0,
-              padding: 4.0,
-              activeColor: Colors.green,
-              // showOnOff: true,
-              onToggle: (val) {
-                if (widget.isActiveStore) {
-                  dialogConfirm();
-                } else {
-                  setState(() {
-                    status = val;
-                  });
-                }
-              },
-            ),
-          )
+          // Container(
+          //   child: FlutterSwitch(
+          //     width: 50.0,
+          //     height: 25.0,
+          //     valueFontSize: 15.0,
+          //     toggleSize: 17.0,
+          //     value: status,
+          //     borderRadius: 30.0,
+          //     padding: 4.0,
+          //     activeColor: Colors.green,
+          //     // showOnOff: true,
+          //     onToggle: (val) {
+          //       if (widget.isActiveStore) {
+          //         dialogConfirm();
+          //       } else {
+          //         setState(() {
+          //           status = val;
+          //         });
+          //       }
+          //     },
+          //   ),
+          // )
+
+          // const AddPro(
+          //     {Key? key, required this.product, required this.isCartScreen})
+          //     : super(key: key);
+//   final dynamic product;
+//   final bool isCartScreen;
+//     late Cart cartController;
+
+//  @override
+//   void initState() {
+//     cartController = context.read<AppProvider>().cart;
+//     // cartController.quantity = 0;
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     String productId = isCartScreen ? product.productId : product.id;
+//     return SizedBox(
+//       height: 36,
+//       child: controller.cart.orderDetail
+//                     .firstWhere(
+//                       (element) => element.productId == productId,
+//                       orElse: () => OrderDetail(
+//                           productId: 'productId', quantity: '0', price: 1),
+//                     )
+//                     .quantity !=
+//                 '0'
+//             ? Card(
+//                 margin: EdgeInsets.all(2),
+//                 elevation: 2,
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     IconButton(
+//                         onPressed: () =>
+//                             controller.subtractProduct(product, isCartScreen),
+//                         icon: const Icon(
+//                           Icons.remove,
+//                           size: 20,
+//                           color: primary,
+//                         )),
+//                     Text(
+//                         controller.cart.orderDetail
+//                             .firstWhere(
+//                               (element) => element.productId == productId,
+//                             )
+//                             .quantity,
+//                         style: Get.textTheme.bodyLarge),
+//                     IconButton(
+//                       onPressed: () {
+//                         controller.addProduct(product, isCartScreen, context);
+//                       },
+//                       icon: const Icon(
+//                         Icons.add,
+//                         size: 20,
+//                         color: primary,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               )
+//             : ElevatedButton(
+//                 onPressed: () =>
+//                     controller.addProduct(product, isCartScreen, context),
+//                 child: Text(
+//                   'Thêm',
+//                 ),
+//               ),
+//       ),
+//     );
+//   }
+// }
         ],
       ),
     );

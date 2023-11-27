@@ -18,7 +18,8 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  TabBar get _tabBar => TabBar(
+  TabBar get _tabBar => const TabBar(
+        labelColor: Color.fromARGB(255, 249, 136, 36),
         tabs: <Widget>[
           Tab(
             // icon: Icon(Icons.cloud_outlined),
@@ -34,6 +35,7 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
         ],
       );
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -45,13 +47,20 @@ class _MenuScreenState extends State<MenuScreen> {
             automaticallyImplyLeading: false,
             flexibleSpace: Container(
               decoration: BoxDecoration(
-                gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)]),
+                gradient: const LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color.fromARGB(243, 255, 85, 76),
+                      Color.fromARGB(255, 249, 136, 36)
+                    ]),
               ),
             ),
             centerTitle: true,
             title: Text(
               "Thực đơn",
-              style: TextStyle(color: MaterialColors.white, fontFamily: "SF Bold"),
+              style:
+                  TextStyle(color: MaterialColors.white, fontFamily: "SF Bold"),
             ),
             bottom: PreferredSize(
               preferredSize: _tabBar.preferredSize,

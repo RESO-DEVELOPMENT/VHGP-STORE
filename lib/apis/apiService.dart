@@ -23,7 +23,31 @@ class ApiServices {
   static const STORE = "stores";
   static const ORDER = "orders";
   static const CATEGORY = "category-management";
+  static const BUILDING = "account-building";
+  static const AREA = "areas";
+  static const AREA_BY_ID = "areas/ByAreaId";
+  static const SUPPLIER = "suppliers";
+
 //https://deliveryvhgp-webapi.azurewebsites.net/api/v1/products/s4/products?pageIndex=1&pageSize=20
+
+  static Future<dynamic> getBuilding(String id) async {
+    try {
+      var response = await http.get(
+        Uri.parse('${baseURL}/${BUILDING}/${id}/${BUILDING}?id=${id}'),
+      );
+      print('${baseURL}/${BUILDING}/${id}/${BUILDING}?id=${id}');
+      if (response.statusCode == 200) {
+        List<dynamic> body = convert.jsonDecode(response.body);
+        List<BuildingModel> buildings =
+            body.map((dynamic item) => BuildingModel.fromJson(item)).toList();
+        return buildings;
+      } else if (response.statusCode == 404) {
+        return [];
+      }
+    } catch (e) {
+      print('Error with status code: ${e}');
+    }
+  }
 
   static Future<dynamic> getListProduct(String storeId, page, size) async {
     try {
@@ -447,7 +471,7 @@ class ApiServices {
     }
   }
 
-  //https://deliveryvhgp-webapi.azurewebsites.net/api/v1/menus/byMode?modeId=1
+  // https://deliveryvhgp-webapi.azurewebsites.net/api/v1/menus/byMode?modeId=1
   static Future<dynamic> getListMenuByMode(modeId) async {
     try {
       var response = await http.get(

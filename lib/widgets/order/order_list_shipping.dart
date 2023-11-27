@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:store_app/apis/apiService.dart';
 import 'package:store_app/constants/Theme.dart';
-import 'package:store_app/constants/Variable.dart';
 import 'package:store_app/models/orderModel.dart';
 
+// ignore: must_be_immutable
 class OrderListShipping extends StatefulWidget {
   String storeId;
   final Function(OrderModel product)? onTap;
-  OrderListShipping({Key? key, required this.onTap, required this.storeId}) : super(key: key);
+  OrderListShipping({Key? key, required this.onTap, required this.storeId})
+      : super(key: key);
 
   @override
   _OrderListShippingState createState() => _OrderListShippingState();
@@ -50,7 +49,8 @@ class _OrderListShippingState extends State<OrderListShipping> {
     getListOrder();
   }
 
-  Future<void> _refreshRandomNumbers() => Future.delayed(Duration(milliseconds: 500), () {
+  Future<void> _refreshRandomNumbers() =>
+      Future.delayed(Duration(milliseconds: 500), () {
         getListOrder();
       });
   String getTime(String time) {
@@ -79,7 +79,8 @@ class _OrderListShippingState extends State<OrderListShipping> {
                             widget.onTap!(orderListShipping[index]);
                           },
                           child: Container(
-                            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
+                            margin: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 5, top: 5),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(4.0),
@@ -88,70 +89,122 @@ class _OrderListShippingState extends State<OrderListShipping> {
                                   color: Colors.grey.withOpacity(0.2),
                                   spreadRadius: 3,
                                   blurRadius: 5,
-                                  offset: Offset(0, 2), // changes position of shadow
+                                  offset: Offset(
+                                      0, 2), // changes position of shadow
                                 ),
                               ],
                             ),
                             child: Container(
-                              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 10, top: 10),
                               height: 120,
-                              child: Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                                Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                  Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                    Text(
-                                      "#${orderListShipping[index].id.toString()}",
-                                      style: const TextStyle(fontFamily: "SF Bold", fontSize: 18, color: Colors.black87),
-                                    ),
-                                  ]),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color.fromARGB(255, 32, 129, 209), MaterialColors.secondary]),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    child: const Text(
-                                      "Đang giao",
-                                      style: TextStyle(fontFamily: "SF SemiBold", fontSize: 15, color: Colors.white),
-                                    ),
-                                  )
-                                ]),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text(
-                                      "Đã lấy hàng lúc " + getTime(orderListShipping[index].time.toString()),
-                                      style: const TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Colors.black),
+                                    Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "#${orderListShipping[index].id.toString()}",
+                                                  style: const TextStyle(
+                                                      fontFamily: "SF Bold",
+                                                      fontSize: 18,
+                                                      color: Colors.black87),
+                                                ),
+                                              ]),
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
+                                                bottom: 5,
+                                                top: 5),
+                                            decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                  begin: Alignment.centerLeft,
+                                                  end: Alignment.centerRight,
+                                                  colors: [
+                                                    Color.fromARGB(
+                                                        255, 32, 129, 209),
+                                                    MaterialColors.secondary
+                                                  ]),
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                            ),
+                                            child: const Text(
+                                              "Đang giao",
+                                              style: TextStyle(
+                                                  fontFamily: "SF SemiBold",
+                                                  fontSize: 15,
+                                                  color: Colors.white),
+                                            ),
+                                          )
+                                        ]),
+                                    const SizedBox(
+                                      height: 5,
                                     ),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "${currencyFormatter.format((orderListShipping[index].total! - orderListShipping[index].shipCost!).toInt())}₫",
-                                          style: TextStyle(fontFamily: "SF Bold", fontSize: 16, color: Colors.black),
+                                          "Đã lấy hàng lúc " +
+                                              getTime(orderListShipping[index]
+                                                  .time
+                                                  .toString()),
+                                          style: const TextStyle(
+                                              fontFamily: "SF Regular",
+                                              fontSize: 15,
+                                              color: Colors.black),
                                         ),
-                                        SizedBox(width: 5),
-                                        const Icon(
-                                          Icons.arrow_forward_ios_outlined,
-                                          size: 15,
-                                          color: Colors.black38,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "${currencyFormatter.format((orderListShipping[index].total! - orderListShipping[index].shipCost!).toInt())}₫",
+                                              style: TextStyle(
+                                                  fontFamily: "SF Bold",
+                                                  fontSize: 16,
+                                                  color: Colors.black),
+                                            ),
+                                            SizedBox(width: 5),
+                                            const Icon(
+                                              Icons.arrow_forward_ios_outlined,
+                                              size: 15,
+                                              color: Colors.black38,
+                                            )
+                                          ],
                                         )
                                       ],
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                  const Text(
-                                    "Tài xế đang giao hàng",
-                                    style: TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Colors.black),
-                                  ),
-                                ]),
-                              ]),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            "Tài xế đang giao hàng",
+                                            style: TextStyle(
+                                                fontFamily: "SF Regular",
+                                                fontSize: 15,
+                                                color: Colors.black),
+                                          ),
+                                        ]),
+                                  ]),
                             ),
                           ),
                         )),

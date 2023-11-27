@@ -74,16 +74,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       backgroundColor: Colors.green,
                       textColor: Colors.white,
                       fontSize: 16.0),
-                  ApiServices.getListProduct(widget.storeId, 1, 8).then((value) => {
-                        if (value != null)
-                          {
-                            setState(() {
-                              listProduct = value;
-                              isLoading = false;
-                              isListFull = false;
-                            })
-                          }
-                      })
+                  ApiServices.getListProduct(widget.storeId, 1, 8)
+                      .then((value) => {
+                            if (value != null)
+                              {
+                                setState(() {
+                                  listProduct = value;
+                                  isLoading = false;
+                                  isListFull = false;
+                                })
+                              }
+                          })
                 }
               else
                 {
@@ -91,7 +92,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     isLoading = false;
                   }),
                   Fluttertoast.showToast(
-                      msg: "Hiện tại sản phẩm đang có trong menu. Vui lòng xóa sản phẩm khỏi menu và thử lại",
+                      msg:
+                          "Hiện tại sản phẩm đang có trong menu. Vui lòng xóa sản phẩm khỏi menu và thử lại",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.TOP,
                       timeInSecForIosWeb: 1,
@@ -109,7 +111,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
     getListProduct();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent && !_isLoadingMore && !isListFull) {
+      if (scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent &&
+          !_isLoadingMore &&
+          !isListFull) {
         setState(() {
           _isLoadingMore = true;
         });
@@ -173,13 +178,20 @@ class _ProductListScreenState extends State<ProductListScreen> {
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)]),
+              gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color.fromARGB(243, 255, 85, 76),
+                    Color.fromARGB(255, 249, 136, 36)
+                  ]),
             ),
           ),
           centerTitle: true,
           title: Text(
             "Danh sách sản phẩm",
-            style: TextStyle(color: MaterialColors.white, fontFamily: "SF Bold"),
+            style:
+                TextStyle(color: MaterialColors.white, fontFamily: "SF Bold"),
           ),
         ),
         body: Stack(
@@ -206,18 +218,19 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                 _isLoadingMore = false;
                                 page = 1;
                                 listProduct = [];
-                                ApiServices.getListProduct(widget.storeId, 1, 8).then((value) => {
-                                      if (value != null)
-                                        {
-                                          setState(() {
-                                            listProduct = value;
-                                            isLoading = false;
-                                            _isLoadingMore = false;
-                                            isListFull = false;
-                                            page++;
-                                          }),
-                                        }
-                                    });
+                                ApiServices.getListProduct(widget.storeId, 1, 8)
+                                    .then((value) => {
+                                          if (value != null)
+                                            {
+                                              setState(() {
+                                                listProduct = value;
+                                                isLoading = false;
+                                                _isLoadingMore = false;
+                                                isListFull = false;
+                                                page++;
+                                              }),
+                                            }
+                                        });
                               })),
                         }
                     },
@@ -252,15 +265,28 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 bottom: 15,
                 child: Container(
                   height: 45,
-                  width: MediaQuery.of(context).size.width * 0.45,
+                  width: MediaQuery.of(context).size.width * 0.38,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: const [
+                        Color.fromARGB(243, 255, 85, 76),
+                        Color.fromARGB(255, 249, 136, 36),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: MaterialColors.secondary,
                         textStyle: TextStyle(color: Colors.black),
-                        shadowColor: Colors.white,
+                        padding: EdgeInsets.all(0),
+                        elevation: 0, // Remove button elevation if not needed
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        backgroundColor: Colors
+                            .transparent, // Make the button background transparent
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -274,30 +300,36 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           Padding(padding: EdgeInsets.all(3)),
                           Text(
                             "Tạo sản phẩm",
-                            style: TextStyle(color: Colors.white, fontFamily: "SF Bold", fontSize: 17),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "SF Bold",
+                                fontSize: 17),
                           ),
                         ],
                       ),
                       onPressed: () => {
                             // Navigator.pushNamed(context, "/new-product")
-                            Navigator.pushNamed(context, '/new-product').then((_) => setState(() {
-                                  isLoading = true;
-                                  _isLoadingMore = false;
-                                  page = 1;
-                                  listProduct = [];
-                                  ApiServices.getListProduct(widget.storeId, 1, 8).then((value) => {
-                                        if (value != null)
-                                          {
-                                            setState(() {
-                                              listProduct = value;
-                                              isLoading = false;
-                                              _isLoadingMore = false;
-                                              isListFull = false;
-                                              page++;
-                                            }),
-                                          }
-                                      });
-                                }))
+                            Navigator.pushNamed(context, '/new-product')
+                                .then((_) => setState(() {
+                                      isLoading = true;
+                                      _isLoadingMore = false;
+                                      page = 1;
+                                      listProduct = [];
+                                      ApiServices.getListProduct(
+                                              widget.storeId, 1, 8)
+                                          .then((value) => {
+                                                if (value != null)
+                                                  {
+                                                    setState(() {
+                                                      listProduct = value;
+                                                      isLoading = false;
+                                                      _isLoadingMore = false;
+                                                      isListFull = false;
+                                                      page++;
+                                                    }),
+                                                  }
+                                              });
+                                    }))
                           }),
                 ))
           ],
