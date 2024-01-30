@@ -28,9 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
             {
               orderListMode3 = res,
               if (orderListMode3.isNotEmpty)
-                {context.read<AppProvider>().setOrderListMode3(orderListMode3), context.read<AppProvider>().setCountOrderMode3(orderListMode3.length)}
+                {
+                  context.read<AppProvider>().setOrderListMode3(orderListMode3),
+                  context
+                      .read<AppProvider>()
+                      .setCountOrderMode3(orderListMode3.length)
+                }
               else
-                {context.read<AppProvider>().setOrderListMode3([]), context.read<AppProvider>().setCountOrderMode3(0)}
+                {
+                  context.read<AppProvider>().setOrderListMode3([]),
+                  context.read<AppProvider>().setCountOrderMode3(0)
+                }
             }
           else
             {context.read<AppProvider>().setOrderListMode3([])}
@@ -119,7 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Text(
-                        context.read<AppProvider>().getCountOrderMode3.toString(),
+                        context
+                            .read<AppProvider>()
+                            .getCountOrderMode3
+                            .toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -144,14 +155,18 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: AppBar(
                 // backgroundColor: Color.fromARGB(255, 255, 255, 255),
                 flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)]),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [MaterialColors.primary, Color(0xfff7892b)]),
                   ),
                 ),
                 centerTitle: true,
                 title: Text(
                   "Đơn hàng",
-                  style: TextStyle(color: MaterialColors.white, fontFamily: "SF Bold"),
+                  style: TextStyle(
+                      color: MaterialColors.white, fontFamily: "SF Bold"),
                 ),
                 bottom: PreferredSize(
                   preferredSize: _tabBar.preferredSize,

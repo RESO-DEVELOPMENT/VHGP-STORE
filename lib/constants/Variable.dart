@@ -12,16 +12,30 @@ class Status {
   static const String CANCEL = "5";
 
   static String getStatusName(status) {
-    if (status == 0 || status == 1 || status == 2 || status == 3) {
-      return "Đang chuẩn bị";
-    } else if (status == 4 || status == 7 || status == 8 || status == 9) {
+    if (status == 0) {
+      return "Tạo dơn thành công";
+    } else if (status == 1) {
+      return "Cửa hàng nhận đơn";
+    } else if (status == 2) {
+      return "Đang tìm tài xế";
+    } else if (status == 3) {
+      return "Tài xế nhận đơn";
+    } else if (status == 4) {
       return "Đang giao";
     } else if (status == 5) {
       return "Hoàn thành";
+    } else if (status == 6) {
+      return "Giao hàng thất bại";
+    } else if (status == 7) {
+      return "Đang đến điểm giao hàng";
+    } else if (status == 8) {
+      return "Đang ở điểm giao hàng";
+    } else if (status == 9) {
+      return "Đang giao đến khách";
     } else if (status == 10) {
       return "Tự động hủy";
     } else if (status == 11) {
-      return "Bạn đã hủy";
+      return "Huỷ bởi cửa hàng";
     } else if (status == 12) {
       return "Tài xế hủy";
     } else if (status == 13) {
@@ -152,7 +166,8 @@ String getModeName(modeId) {
   }
 }
 
-String getModeMessage(List listStatusOrder, int status, String modeId, String dayFilter, String timeOrder, String fromHour, String toHour) {
+String getModeMessage(List listStatusOrder, int status, String modeId,
+    String dayFilter, String timeOrder, String fromHour, String toHour) {
   var time = "";
   var outputDateTime = "";
   var outputDateDay = "";

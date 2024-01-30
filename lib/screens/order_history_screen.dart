@@ -24,7 +24,11 @@ class OrderHistoryScreen extends StatefulWidget {
 class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   List<OrderModel> orderListDone = [];
   List<OrderModel> orderListDoneToday = [];
-  late OrderReportModel orderReportModel = OrderReportModel(totalOrderNew: 0, totalOrderCancel: 0, totalOrderCompleted: 0, totalOrder: 0);
+  late OrderReportModel orderReportModel = OrderReportModel(
+      totalOrderNew: 0,
+      totalOrderCancel: 0,
+      totalOrderCompleted: 0,
+      totalOrder: 0);
   bool isLoading = true;
   late bool isListFull = false;
   late int page = 1;
@@ -47,7 +51,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                         inputDate = inputFormat.parse(e.time!),
                         print(e.status),
                         outputDateTime = outputFormatEnd.format(inputDate),
-                        if (outputDateTime.toString() == "${now.day.toString()}/${now.month.toString()}/${now.year.toString()}")
+                        // ignore: unrelated_type_equality_checks
+                        if (inputDate.day == DateTime.now().day)
                           {
                             setState(() {
                               orderListDoneToday = [...orderListDoneToday, e];
@@ -103,7 +108,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     // TODO: implement initState
     super.initState();
     var storeId = context.read<AppProvider>().getUserId;
-    getOrderReport(storeId);
+    // getOrderReport(storeId);
+    getListOrder(storeId);
   }
 
   String getTime(String time) {
@@ -122,7 +128,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         appBar: new AppBar(
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)]),
+              gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [MaterialColors.primary, Color(0xfff7892b)]),
             ),
           ),
           centerTitle: true,
@@ -144,64 +153,86 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                if (!isLoading)
-                  Container(
-                    padding: EdgeInsets.only(
-                      left: 15,
-                      right: 15,
-                    ),
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: EdgeInsets.only(bottom: 15, top: 15),
-                              decoration: BoxDecoration(border: Border(right: BorderSide(color: Color.fromRGBO(245, 245, 245, 1), width: 1))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    orderReportModel.totalOrderCompleted.toString(),
-                                    style: TextStyle(fontFamily: "SF Bold", fontSize: 18, color: Color.fromRGBO(50, 50, 50, 1)),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "Đơn hàng hoàn tất",
-                                    style: TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
-                                  )
-                                ],
-                              ),
-                            )),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(orderReportModel.totalOrderCancel.toString(), style: TextStyle(fontFamily: "SF Bold", fontSize: 18, color: Color.fromRGBO(50, 50, 50, 1))),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Đơn đã hủy",
-                                  style: TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
-                                )
-                              ],
-                            ),
-                            padding: EdgeInsets.only(left: 15, bottom: 15, top: 15),
-                          ),
-                          flex: 1,
-                        ),
-                      ],
-                    ),
-                  ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // if (!isLoading)
+                //   Container(
+                //     padding: EdgeInsets.only(
+                //       left: 15,
+                //       right: 15,
+                //     ),
+                //     color: Colors.white,
+                //     child: Row(
+                //       children: [
+                //         Expanded(
+                //             flex: 1,
+                //             child: Container(
+                //               padding: EdgeInsets.only(bottom: 15, top: 15),
+                //               decoration: BoxDecoration(
+                //                   border: Border(
+                //                       right: BorderSide(
+                //                           color:
+                //                               Color.fromRGBO(245, 245, 245, 1),
+                //                           width: 1))),
+                //               child: Column(
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 children: [
+                //                   Text(
+                //                     orderReportModel.totalOrderCompleted
+                //                         .toString(),
+                //                     style: TextStyle(
+                //                         fontFamily: "SF Bold",
+                //                         fontSize: 18,
+                //                         color: Color.fromRGBO(50, 50, 50, 1)),
+                //                   ),
+                //                   SizedBox(
+                //                     height: 5,
+                //                   ),
+                //                   Text(
+                //                     "Đơn hàng hoàn tất",
+                //                     style: TextStyle(
+                //                         fontFamily: "SF Regular",
+                //                         fontSize: 15,
+                //                         color: Color.fromRGBO(50, 50, 50, 1)),
+                //                   )
+                //                 ],
+                //               ),
+                //             )),
+                //         Expanded(
+                //           child: Container(
+                //             child: Column(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               mainAxisAlignment: MainAxisAlignment.center,
+                //               children: [
+                //                 Text(
+                //                     orderReportModel.totalOrderCancel
+                //                         .toString(),
+                //                     style: TextStyle(
+                //                         fontFamily: "SF Bold",
+                //                         fontSize: 18,
+                //                         color: Color.fromRGBO(50, 50, 50, 1))),
+                //                 SizedBox(
+                //                   height: 5,
+                //                 ),
+                //                 Text(
+                //                   "Đơn đã hủy",
+                //                   style: TextStyle(
+                //                       fontFamily: "SF Regular",
+                //                       fontSize: 15,
+                //                       color: Color.fromRGBO(50, 50, 50, 1)),
+                //                 )
+                //               ],
+                //             ),
+                //             padding:
+                //                 EdgeInsets.only(left: 15, bottom: 15, top: 15),
+                //           ),
+                //           flex: 1,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
                 SizedBox(
                   height: 15,
                 ),
@@ -210,7 +241,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                     padding: EdgeInsets.only(left: 15, bottom: 10, top: 5),
                     child: Text(
                       "Hôm nay",
-                      style: TextStyle(fontFamily: "SF SemiBold", fontSize: 17, color: Color.fromRGBO(150, 150, 150, 1)),
+                      style: TextStyle(
+                          fontFamily: "SF SemiBold",
+                          fontSize: 17,
+                          color: Color.fromRGBO(150, 150, 150, 1)),
                     ),
                   ),
                 ...orderListDoneToday.map((OrderModel order) {
@@ -229,56 +263,95 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       //   left: 10,
                       //   right: 10,
                       // ),
-                      decoration: BoxDecoration(color: Colors.white, border: index != orderListDoneToday.length - 1 ? Border(bottom: BorderSide(color: Colors.black12, width: 1)) : null),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: index != orderListDoneToday.length - 1
+                              ? Border(
+                                  bottom: BorderSide(
+                                      color: Colors.black12, width: 1))
+                              : null),
                       child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 10),
+                        padding: EdgeInsets.only(
+                            left: 15, right: 15, bottom: 10, top: 10),
                         height: 115,
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Container(
-                            child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              Text(
-                                '#${order.id.toString()}',
-                                style: TextStyle(fontFamily: "SF SemiBold", fontSize: 17, color: Color.fromRGBO(50, 50, 50, 1)),
-                              )
-                            ]),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                  Text(
-                                    Status.getStatusName(order.status).toString(),
-                                    style: TextStyle(fontFamily: "SF Bold", fontSize: 16, color: Status.getStatusColorText(order.status)),
-                                  ),
-                                ]),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '#${order.id.toString()}',
+                                        style: TextStyle(
+                                            fontFamily: "SF SemiBold",
+                                            fontSize: 17,
+                                            color:
+                                                Color.fromRGBO(50, 50, 50, 1)),
+                                      )
+                                    ]),
                               ),
-                              Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                Text(
-                                  "${currencyFormatter.format((order.total! - order.shipCost!).toInt())}₫",
-                                  style: const TextStyle(fontFamily: "SF Bold", fontSize: 17, color: Colors.black),
-                                ),
-                                const Padding(padding: EdgeInsets.all(5)),
-                                const Icon(
-                                  Icons.arrow_forward_ios_outlined,
-                                  size: 15,
-                                  color: Colors.black38,
-                                )
-                              ]),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            "${order.status == 5 ? "Đã giao" : Status.getStatusName(order.status)} lúc ${getTime(order.time.toString())}",
-                            style: TextStyle(fontFamily: "SF Medium", fontSize: 15, color: Colors.black38),
-                          ),
-                        ]),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            Status.getStatusName(order.status)
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontFamily: "SF Bold",
+                                                fontSize: 16,
+                                                color:
+                                                    Status.getStatusColorText(
+                                                        order.status)),
+                                          ),
+                                        ]),
+                                  ),
+                                  Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${currencyFormatter.format((order.total! - order.shipCost!).toInt())}₫",
+                                          style: const TextStyle(
+                                              fontFamily: "SF Bold",
+                                              fontSize: 17,
+                                              color: Colors.black),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.all(5)),
+                                        const Icon(
+                                          Icons.arrow_forward_ios_outlined,
+                                          size: 15,
+                                          color: Colors.black38,
+                                        )
+                                      ]),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Text(
+                                "${order.status == 5 ? "Đã giao" : Status.getStatusName(order.status)} lúc ${getTime(order.time.toString())}",
+                                style: TextStyle(
+                                    fontFamily: "SF Medium",
+                                    fontSize: 15,
+                                    color: Colors.black38),
+                              ),
+                            ]),
                       ),
                     ),
                   );
@@ -288,7 +361,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                     padding: EdgeInsets.only(left: 15, bottom: 10, top: 25),
                     child: Text(
                       "Cũ hơn",
-                      style: TextStyle(fontFamily: "SF SemiBold", fontSize: 17, color: Color.fromRGBO(150, 150, 150, 1)),
+                      style: TextStyle(
+                          fontFamily: "SF SemiBold",
+                          fontSize: 17,
+                          color: Color.fromRGBO(150, 150, 150, 1)),
                     ),
                   ),
                 ...orderListDone.map((OrderModel order) {
@@ -307,56 +383,95 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       //   left: 10,
                       //   right: 10,
                       // ),
-                      decoration: BoxDecoration(color: Colors.white, border: index != orderListDone.length - 1 ? Border(bottom: BorderSide(color: Colors.black12, width: 1)) : null),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: index != orderListDone.length - 1
+                              ? Border(
+                                  bottom: BorderSide(
+                                      color: Colors.black12, width: 1))
+                              : null),
                       child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 10),
+                        padding: EdgeInsets.only(
+                            left: 15, right: 15, bottom: 10, top: 10),
                         height: 115,
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Container(
-                            child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              Text(
-                                '#${order.id.toString()}',
-                                style: TextStyle(fontFamily: "SF SemiBold", fontSize: 17, color: Color.fromRGBO(50, 50, 50, 1)),
-                              )
-                            ]),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                  Text(
-                                    Status.getStatusName(order.status).toString(),
-                                    style: TextStyle(fontFamily: "SF Bold", fontSize: 16, color: Status.getStatusColorText(order.status)),
-                                  ),
-                                ]),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '#${order.id.toString()}',
+                                        style: TextStyle(
+                                            fontFamily: "SF SemiBold",
+                                            fontSize: 17,
+                                            color:
+                                                Color.fromRGBO(50, 50, 50, 1)),
+                                      )
+                                    ]),
                               ),
-                              Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                Text(
-                                  "${currencyFormatter.format((order.total! - order.shipCost!).toInt())}₫",
-                                  style: const TextStyle(fontFamily: "SF Bold", fontSize: 17, color: Colors.black),
-                                ),
-                                const Padding(padding: EdgeInsets.all(5)),
-                                const Icon(
-                                  Icons.arrow_forward_ios_outlined,
-                                  size: 15,
-                                  color: Colors.black38,
-                                )
-                              ]),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            "${order.status == 5 ? "Đã giao" : Status.getStatusName(order.status)} lúc ${getTime(order.time.toString())}",
-                            style: TextStyle(fontFamily: "SF Medium", fontSize: 15, color: Colors.black38),
-                          ),
-                        ]),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            Status.getStatusName(order.status)
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontFamily: "SF Bold",
+                                                fontSize: 16,
+                                                color:
+                                                    Status.getStatusColorText(
+                                                        order.status)),
+                                          ),
+                                        ]),
+                                  ),
+                                  Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${currencyFormatter.format((order.total! - order.shipCost!).toInt())}₫",
+                                          style: const TextStyle(
+                                              fontFamily: "SF Bold",
+                                              fontSize: 17,
+                                              color: Colors.black),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.all(5)),
+                                        const Icon(
+                                          Icons.arrow_forward_ios_outlined,
+                                          size: 15,
+                                          color: Colors.black38,
+                                        )
+                                      ]),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Text(
+                                "${order.status == 5 ? "Đã giao" : Status.getStatusName(order.status)} lúc ${getTime(order.time.toString())}",
+                                style: TextStyle(
+                                    fontFamily: "SF Medium",
+                                    fontSize: 15,
+                                    color: Colors.black38),
+                              ),
+                            ]),
                       ),
                     ),
                   );
