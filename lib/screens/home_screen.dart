@@ -1,26 +1,36 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/apis/apiService.dart';
 import 'package:store_app/constants/Theme.dart';
 import 'package:store_app/models/orderModel.dart';
+import 'package:store_app/models/productModel.dart';
 import 'package:store_app/provider/appProvider.dart';
 import 'package:store_app/widgets/menuTab/order_tab.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  String storeId;
+  HomeScreen({Key? key, required this.storeId}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late bool isLoading = true;
+  late bool _isLoadingMore = false;
+  late bool isListFull = false;
+  late int page = 1;
+
+  late List<ProductModel> listProduct = [];
+
   FirebaseAuth auth = FirebaseAuth.instance;
   @override
   void initState() {
     // TODO: implement initState
     List<OrderModel> orderListMode3 = [];
+    List<OrderModel> orderListMode1 = [];
     super.initState();
     var storeId = context.read<AppProvider>().getUserId;
     ApiServices.getListOrderByMode(storeId, "3", 1, 100).then((res) => {
@@ -42,6 +52,27 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           else
             {context.read<AppProvider>().setOrderListMode3([])}
+        });
+
+    ApiServices.getListOrderByMode(storeId, "1", 1, 100).then((res) => {
+          if (res != null)
+            {
+              orderListMode1 = res,
+              if (orderListMode1.isNotEmpty)
+                {
+                  context.read<AppProvider>().setOrderListMode1(orderListMode1),
+                  context
+                      .read<AppProvider>()
+                      .setCountOrder(orderListMode1.length)
+                }
+              else
+                {
+                  context.read<AppProvider>().setOrderListMode1([]),
+                  context.read<AppProvider>().setCountOrder(0)
+                }
+            }
+          else
+            {context.read<AppProvider>().setOrderListMode1([])}
         });
   }
 
@@ -74,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Text(
                         context.read<AppProvider>().getCountOrder.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 10,
                         ),
@@ -144,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       );
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppProvider>(builder: (context, provider, child) {
@@ -152,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
           initialIndex: 0,
           length: 3,
           child: Scaffold(
-            appBar: AppBar(
+              appBar: AppBar(
                 // backgroundColor: Color.fromARGB(255, 255, 255, 255),
                 flexibleSpace: Container(
                   decoration: const BoxDecoration(
@@ -171,15 +203,92 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottom: PreferredSize(
                   preferredSize: _tabBar.preferredSize,
                   child: ColoredBox(color: Colors.white, child: _tabBar),
-                )),
-            body: TabBarView(
-              children: <Widget>[
-                OrderTab(storeId: storeId, tab: 1),
-                OrderTab(storeId: storeId, tab: 2),
-                OrderTab(storeId: storeId, tab: 3),
-              ],
-            ),
-          ));
+                ),
+              ),
+              body: Stack(
+                children: [
+                  TabBarView(
+                    children: <Widget>[
+                      OrderTab(storeId: storeId, tab: 1),
+                      OrderTab(storeId: storeId, tab: 2),
+                      OrderTab(storeId: storeId, tab: 3),
+                    ],
+                  ),
+                  Positioned(
+                    right: 15,
+                    bottom: 15,
+                    child: Container(
+                      height: 45,
+                      width: MediaQuery.of(context).size.width * 0.38,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: const [
+                            Color.fromARGB(243, 255, 85, 76),
+                            Color.fromARGB(255, 249, 136, 36),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(color: Colors.black),
+                            padding: EdgeInsets.all(0),
+                            elevation:
+                                0, // Remove button elevation if not needed
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            backgroundColor: Colors.transparent,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              )),
+                              Padding(padding: EdgeInsets.all(3)),
+                              Text(
+                                "Tạo vận đơn",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "SF Bold",
+                                    fontSize: 17),
+                              ),
+                            ],
+                          ),
+                          onPressed: () => {
+                                Navigator.pushNamed(context, '/cart')
+                                    .then((_) => setState(() {
+                                          isLoading = true;
+                                          _isLoadingMore = false;
+                                          page = 1;
+                                          listProduct = [];
+                                          ApiServices.getListProduct(
+                                                  widget.storeId, 1, 8)
+                                              .then((value) => {
+                                                    if (value != null)
+                                                      {
+                                                        setState(() {
+                                                          listProduct = value;
+                                                          isLoading = false;
+                                                          _isLoadingMore =
+                                                              false;
+                                                          isListFull = false;
+                                                          page++;
+                                                        }),
+                                                      }
+                                                  });
+                                        }))
+                              }),
+                    ),
+                  ),
+                ],
+              )));
     });
   }
 }

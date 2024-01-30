@@ -17,7 +17,8 @@ import 'package:store_app/widgets/modals/menu_modal.dart';
 class MenuTab extends StatefulWidget {
   String menuIndex;
   String storeId;
-  MenuTab({Key? key, required this.menuIndex, required this.storeId}) : super(key: key);
+  MenuTab({Key? key, required this.menuIndex, required this.storeId})
+      : super(key: key);
 
   @override
   _MenuTabState createState() => _MenuTabState();
@@ -34,7 +35,7 @@ class _MenuTabState extends State<MenuTab> {
     // TODO: implement initState
     super.initState();
     List<MenuModel> list = [];
-    ApiServices.getListMenuByMode(widget.menuIndex ?? "0").then((value) => {
+    ApiServices.getListMenuByMode(widget.menuIndex).then((value) => {
           if (value != null)
             {
               list = value,
@@ -46,22 +47,24 @@ class _MenuTabState extends State<MenuTab> {
                   setState(() {
                     menuId = list.elementAt(0).id.toString();
                   }),
-                  ApiServices.getListProductByMenu(list.elementAt(0).id, widget.storeId, 1, 20).then((value) => {
-                        if (value != null)
-                          {
-                            setState(() {
-                              menuDetailList = value;
-                              isLoading = false;
-                            })
-                          }
-                        else
-                          {
-                            setState(() {
-                              menuDetailList = [];
-                              isLoading = false;
-                            })
-                          }
-                      })
+                  ApiServices.getListProductByMenu(
+                          list.elementAt(0).id, widget.storeId, 1, 20)
+                      .then((value) => {
+                            if (value != null)
+                              {
+                                setState(() {
+                                  menuDetailList = value;
+                                  isLoading = false;
+                                })
+                              }
+                            else
+                              {
+                                setState(() {
+                                  menuDetailList = [];
+                                  isLoading = false;
+                                })
+                              }
+                          })
                 }
               else
                 {
@@ -86,23 +89,24 @@ class _MenuTabState extends State<MenuTab> {
       // menus = [];
       isLoading = true;
     });
-    ApiServices.getListProductByMenu(menuId, widget.storeId, 1, 20).then((value) => {
-          if (value != null)
-            {
-              setState(() {
-                print(value);
-                menuDetailList = value;
-                isLoading = false;
-              })
-            }
-          else
-            {
-              setState(() {
-                menuDetailList = [];
-                isLoading = false;
-              })
-            }
-        });
+    ApiServices.getListProductByMenu(menuId, widget.storeId, 1, 20)
+        .then((value) => {
+              if (value != null)
+                {
+                  setState(() {
+                    print(value);
+                    menuDetailList = value;
+                    isLoading = false;
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    menuDetailList = [];
+                    isLoading = false;
+                  })
+                }
+            });
   }
 
   void showMemberInfo(menuId, context, storeId) {
@@ -114,7 +118,8 @@ class _MenuTabState extends State<MenuTab> {
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(15.0))),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(15.0))),
         builder: (BuildContext bc) {
           return MenuModal(
               storeId: storeId,
@@ -146,72 +151,111 @@ class _MenuTabState extends State<MenuTab> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        margin: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
+                        margin: EdgeInsets.only(
+                            top: 20, left: 15, right: 15, bottom: 10),
                         child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Container(
                               // width: MediaQuery.of(context).size.width,
-                              child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                if (menus.length > 0)
-                                  ...menus.map((MenuModel pro) {
-                                    var index = menus.indexOf(pro);
-                                    return InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          tabActive = index;
-                                          getListProductByMenu(pro.id);
-                                          menuId = pro.id.toString();
-                                        });
-                                      },
-                                      child: Container(
-                                          margin: EdgeInsets.only(right: 15),
-                                          padding: EdgeInsets.only(bottom: 10, top: 10, left: 15, right: 15),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: tabActive == index ? MaterialColors.secondary : Colors.white,
-                                              borderRadius: BorderRadius.all(Radius.circular(8)),
-                                              border: Border.all(
-                                                color: tabActive == index ? Colors.white : MaterialColors.secondary,
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    if (menus.length > 0)
+                                      ...menus.map((MenuModel pro) {
+                                        var index = menus.indexOf(pro);
+                                        return InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              tabActive = index;
+                                              getListProductByMenu(pro.id);
+                                              menuId = pro.id.toString();
+                                            });
+                                          },
+                                          child: Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 15),
+                                              padding: EdgeInsets.only(
+                                                  bottom: 10,
+                                                  top: 10,
+                                                  left: 15,
+                                                  right: 15),
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color: tabActive == index
+                                                      ? Color.fromARGB(
+                                                          255, 249, 136, 36)
+                                                      : Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(8)),
+                                                  border: Border.all(
+                                                    color: tabActive == index
+                                                        ? Colors.white
+                                                        : Color.fromARGB(
+                                                            255, 249, 136, 36),
+                                                  )),
+                                              child: Text(
+                                                pro.name.toString(),
+                                                style: TextStyle(
+                                                    color: tabActive == index
+                                                        ? Colors.white
+                                                        : Color.fromARGB(
+                                                            255, 249, 136, 36),
+                                                    fontFamily: "SF SemiBold",
+                                                    fontSize: 16),
                                               )),
-                                          child: Text(
-                                            pro.name.toString(),
-                                            style: TextStyle(color: tabActive == index ? Colors.white : MaterialColors.secondary, fontFamily: "SF SemiBold", fontSize: 16),
-                                          )),
-                                    );
-                                  }),
-                              ]),
+                                        );
+                                      }),
+                                  ]),
                             ))),
                     if (menus.isNotEmpty)
                       Container(
-                        margin: EdgeInsets.only(top: 25, left: 15, right: 15, bottom: 15),
-                        child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Container(
-                            child: Row(children: [
-                              Text(
-                                menus[tabActive].name!,
-                                style: TextStyle(fontFamily: "SF SemiBold", fontSize: 18),
+                        margin: EdgeInsets.only(
+                            top: 25, left: 15, right: 15, bottom: 15),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(children: [
+                                  Text(
+                                    menus[tabActive].name!,
+                                    style: TextStyle(
+                                        fontFamily: "SF SemiBold",
+                                        fontSize: 18),
+                                  ),
+                                  Padding(padding: EdgeInsets.all(2)),
+                                  Text(
+                                    "(" +
+                                        menuDetailList.length.toString() +
+                                        " Danh mục)",
+                                    style: TextStyle(
+                                        fontFamily: "SF Regular", fontSize: 15),
+                                  )
+                                ]),
                               ),
-                              Padding(padding: EdgeInsets.all(2)),
-                              Text(
-                                "(" + menuDetailList.length.toString() + " Danh mục)",
-                                style: TextStyle(fontFamily: "SF Regular", fontSize: 15),
+                              InkWell(
+                                onTap: () {
+                                  showMemberInfo(menuId, context,
+                                      context.read<AppProvider>().getUserId);
+                                },
+                                child: Container(
+                                  child: Row(children: [
+                                    Text(
+                                      "Thêm món",
+                                      style: TextStyle(
+                                        fontFamily: "SF SemiBold",
+                                        fontSize: 18,
+                                        color:
+                                            Color.fromARGB(255, 249, 136, 36),
+                                      ),
+                                    ),
+                                  ]),
+                                ),
                               )
                             ]),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              showMemberInfo(menuId, context, context.read<AppProvider>().getUserId);
-                            },
-                            child: Container(
-                              child: Row(children: [
-                                Text(
-                                  "Thêm món",
-                                  style: TextStyle(fontFamily: "SF SemiBold", fontSize: 18, color: MaterialColors.secondary),
-                                ),
-                              ]),
-                            ),
-                          )
-                        ]),
                       ),
                     if (menuDetailList.isNotEmpty)
                       ...menuDetailList.map((MenuDetailModel menu) {
@@ -219,24 +263,33 @@ class _MenuTabState extends State<MenuTab> {
                         return Container(
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.only(top: 3, bottom: 3),
-                          decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.black12, width: 1))),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: Colors.black12, width: 1))),
                           child: AccordionMenu(
                             count: menu.listProducts!.length.toString(),
                             content: Container(
-                                margin: EdgeInsets.only(top: 0, left: 30, right: 15, bottom: 15),
+                                margin: EdgeInsets.only(
+                                    top: 0, left: 30, right: 15, bottom: 15),
                                 child: Column(
                                   children: [
                                     if (menu.listProducts!.isNotEmpty)
                                       ...menu.listProducts!.map((dynamic item) {
-                                        var index = menu.listProducts!.indexOf(item);
+                                        var index =
+                                            menu.listProducts!.indexOf(item);
                                         return AccordionMenuItem(
                                           callBack: () {
                                             setState(() {
                                               isLoading = true;
                                             });
-                                            ApiServices.deleteProductInMenu(item["id"], menuId)
+                                            ApiServices.deleteProductInMenu(
+                                                    item["id"], menuId)
                                                 .then(
-                                                  (value) => {getListProductByMenu(menuId)},
+                                                  (value) => {
+                                                    getListProductByMenu(menuId)
+                                                  },
                                                 )
                                                 .catchError((err) => {
                                                       setState(() {
@@ -244,11 +297,17 @@ class _MenuTabState extends State<MenuTab> {
                                                       })
                                                     });
                                           },
-                                          isBorder: index == menu.listProducts!.length - 1 ? false : true,
+                                          isBorder: index ==
+                                                  menu.listProducts!.length - 1
+                                              ? false
+                                              : true,
                                           name: item["name"],
                                           image: item["image"],
                                           isActiveStore: isActiveStore,
-                                          price: currencyFormatter.format((item["pricePerPack"]!).toInt()).toString(),
+                                          price: currencyFormatter
+                                              .format((item["pricePerPack"]!)
+                                                  .toInt())
+                                              .toString(),
                                           isActive: item["status"],
                                         );
                                       })

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:store_app/constants/Theme.dart';
 
+final dateFormat = DateFormat('Hm');
+final date = DateFormat('dd/MM/yyyy');
+
 class Status {
   static const String CREATEORDER = "1";
   static const String SHIPPERACCEPT = "2";
@@ -59,9 +62,15 @@ class Status {
 
   static List<Color>? getStatusColor(status) {
     if (status == 0 || status == 1 || status == 2 || status == 3) {
-      return [MaterialColors.primary, Color(0xfff7892b)];
+      return [
+        Color.fromARGB(243, 255, 85, 76),
+        Color.fromARGB(255, 249, 136, 36)
+      ];
     } else if (status == 7 || status == 8 || status == 9 || status == 4) {
-      return [Color.fromARGB(255, 32, 129, 209), MaterialColors.secondary];
+      return [
+        Color.fromARGB(243, 255, 85, 76),
+        Color.fromARGB(255, 249, 136, 36)
+      ];
     } else if (status == 5) {
       return [Colors.green, MaterialColors.success];
     } else {

@@ -80,11 +80,22 @@ class _OrderListState extends State<OrderList> with TickerProviderStateMixin {
   @override
   void initState() {
     // TODO: implement initState
-    registerNotification();
-    // _controller = AnimationController(vsync: this, duration: Duration(microseconds: 100));
-    // _controller.forward();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(microseconds: 100));
+    _controller.forward();
     super.initState();
+    fcmListener = FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      final notification = message.notification;
+      final data = message.data;
 
+      final title = notification?.title ?? 'No Title';
+      final body = notification?.body ?? 'No Body';
+      final customData = data['yourCustomData'];
+
+      print(
+          'Received FCM message: Title: $title, Body: $body, Custom Data: $customData');
+    });
+    registerNotification();
     getListOrder();
   }
 
@@ -201,7 +212,7 @@ class _OrderListState extends State<OrderList> with TickerProviderStateMixin {
                                                       Container(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 left: 10,
                                                                 right: 10,
                                                                 bottom: 5,
@@ -253,7 +264,13 @@ class _OrderListState extends State<OrderList> with TickerProviderStateMixin {
                                                                 .center,
                                                         children: [
                                                           Text(
-                                                            "${orderList[index].countProduct} món",
+                                                            orderList[index].countProduct ==
+                                                                        null ||
+                                                                    orderList[index]
+                                                                            .countProduct ==
+                                                                        "0"
+                                                                ? "Đơn hàng"
+                                                                : "${orderList[index].countProduct} món",
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     "SF SemiBold",

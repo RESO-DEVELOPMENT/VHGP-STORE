@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/apis/apiService.dart';
 import 'package:store_app/constants/Theme.dart';
@@ -36,7 +35,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     //Must re-authenticate user before updating the password. Otherwise it may fail or user get signed out.
 
     try {
-      final cred = EmailAuthProvider.credential(email: userId, password: _oldPass.text);
+      final cred =
+          EmailAuthProvider.credential(email: userId, password: _oldPass.text);
       var base64String = null;
       StoreModel storeContext = context.read<AppProvider>().getStoreModel;
       http.Response imageResponse = await http.get(
@@ -121,11 +121,23 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         isloading = false;
       });
       Fluttertoast.showToast(
-          msg: "Mật khẩu cũ không đúng", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+          msg: "Mật khẩu cũ không đúng",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     } catch (e) {
       print("e " + e.toString());
       Fluttertoast.showToast(
-          msg: "Mật khẩu cũ không đúng", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+          msg: "Mật khẩu cũ không đúng",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       print(e);
       setState(() {
         isloading = false;
@@ -158,7 +170,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 key: _formKey,
                 child: Container(
                   decoration: BoxDecoration(color: Colors.white),
-                  padding: EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 15),
+                  padding:
+                      EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 15),
                   child: Column(children: [
                     Row(
                       children: [
@@ -289,14 +302,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                     Padding(padding: EdgeInsets.all(30)),
                     Container(
-                        padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                        padding: EdgeInsets.only(
+                            left: 15, right: 15, top: 10, bottom: 10),
                         width: MediaQuery.of(context).size.width,
                         child: Container(
                           height: 45,
                           child: InkWell(
                             onTap: () {
                               if (_formKey.currentState!.validate()) {
-                                hanldeSubmit(context.read<AppProvider>().getUserId ?? "");
+                                hanldeSubmit(
+                                    context.read<AppProvider>().getUserId ??
+                                        "");
                               }
                             },
                             child: Container(
@@ -304,9 +320,22 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               padding: const EdgeInsets.symmetric(vertical: 15),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                  boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                                  gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)])),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(8)),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color: Colors.grey.shade200,
+                                        offset: const Offset(2, 4),
+                                        blurRadius: 5,
+                                        spreadRadius: 2)
+                                  ],
+                                  gradient: const LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        MaterialColors.primary,
+                                        Color(0xfff7892b)
+                                      ])),
                               child: const Text(
                                 'Đổi mật khẩu',
                                 style: TextStyle(

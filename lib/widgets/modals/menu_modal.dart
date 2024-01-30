@@ -39,7 +39,8 @@ class MenuModal extends StatefulWidget {
   late ValueChanged<void> function;
   late String menuId;
   late String storeId;
-  MenuModal({required this.function, required this.menuId, required this.storeId});
+  MenuModal(
+      {required this.function, required this.menuId, required this.storeId});
   @override
   State<StatefulWidget> createState() => _MenuModal();
 }
@@ -53,22 +54,23 @@ class _MenuModal extends State<MenuModal> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ApiServices.getListProductOutOfMenu(widget.menuId, widget.storeId, 1, 100).then((value) => {
-          if (value != null)
-            {
-              setState(
-                () => {productOutOfMenus = value, _isLoadingCircle = false},
-              )
-            }
-          else
-            {
-              setState(() {
-                setState(() {
-                  _isLoadingCircle = false;
-                });
-              })
-            }
-        });
+    ApiServices.getListProductOutOfMenu(widget.menuId, widget.storeId, 1, 100)
+        .then((value) => {
+              if (value != null)
+                {
+                  setState(
+                    () => {productOutOfMenus = value, _isLoadingCircle = false},
+                  )
+                }
+              else
+                {
+                  setState(() {
+                    setState(() {
+                      _isLoadingCircle = false;
+                    });
+                  })
+                }
+            });
     // print(widget.id);
   }
 
@@ -85,22 +87,23 @@ class _MenuModal extends State<MenuModal> {
     setState(() {
       _isLoadingSubmit = true;
     });
-    ApiServices.postJoinMenu(productCheckedList, widget.menuId).then((value) => {
-          if (value != null)
-            {
-              Navigator.pop(context),
-              setState(() {
-                _isLoadingSubmit = false;
-              }),
-              widget.function("")
-            }
-          else
-            {
-              setState(() {
-                _isLoadingSubmit = false;
-              })
-            }
-        });
+    ApiServices.postJoinMenu(productCheckedList, widget.menuId)
+        .then((value) => {
+              if (value != null)
+                {
+                  Navigator.pop(context),
+                  setState(() {
+                    _isLoadingSubmit = false;
+                  }),
+                  widget.function("")
+                }
+              else
+                {
+                  setState(() {
+                    _isLoadingSubmit = false;
+                  })
+                }
+            });
   }
 
   hanldeChecked(id) {
@@ -117,7 +120,8 @@ class _MenuModal extends State<MenuModal> {
       for (var i = 0; i < productOutOfMenus.length; i++) {
         if (productOutOfMenus[i].id == id) {
           setState(() {
-            productCheckedList.add(CheckedItem(id: id, price: productOutOfMenus[i].pricePerPack!.toDouble()));
+            productCheckedList.add(CheckedItem(
+                id: id, price: productOutOfMenus[i].pricePerPack!.toDouble()));
           });
         }
       }
@@ -143,7 +147,10 @@ class _MenuModal extends State<MenuModal> {
                   Container(
                       child: Text(
                     "Danh sách sản phẩm",
-                    style: TextStyle(color: MaterialColors.black, fontFamily: "SF Bold", fontSize: 20),
+                    style: TextStyle(
+                        color: MaterialColors.black,
+                        fontFamily: "SF Bold",
+                        fontSize: 20),
                   )),
                   if (productOutOfMenus.isNotEmpty)
                     ...productOutOfMenus.map(
@@ -174,7 +181,10 @@ class _MenuModal extends State<MenuModal> {
                   ),
                   Text(
                     "Không có sản phầm nào phù hợp",
-                    style: TextStyle(color: MaterialColors.black, fontFamily: "SF Regular", fontSize: 16),
+                    style: TextStyle(
+                        color: MaterialColors.black,
+                        fontFamily: "SF Regular",
+                        fontSize: 16),
                   )
                 ],
               ),
@@ -184,7 +194,8 @@ class _MenuModal extends State<MenuModal> {
             bottom: 0,
             child: Container(
                 decoration: BoxDecoration(color: Colors.white),
-                padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                padding:
+                    EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [
@@ -204,10 +215,22 @@ class _MenuModal extends State<MenuModal> {
                                 // padding: const EdgeInsets.symmetric(vertical: 5),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                    boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                                    gradient:
-                                        const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color.fromRGBO(220, 220, 220, 1), Color.fromRGBO(200, 200, 200, 1)])),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Colors.grey.shade200,
+                                          offset: const Offset(2, 4),
+                                          blurRadius: 5,
+                                          spreadRadius: 2)
+                                    ],
+                                    gradient: const LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Color.fromRGBO(220, 220, 220, 1),
+                                          Color.fromRGBO(200, 200, 200, 1)
+                                        ])),
                                 child: const Text(
                                   'Đóng',
                                   style: TextStyle(
@@ -224,32 +247,54 @@ class _MenuModal extends State<MenuModal> {
                     Padding(padding: EdgeInsets.all(7)),
                     Expanded(
                         child: Container(
-                            decoration: const BoxDecoration(color: Colors.white),
+                            decoration:
+                                const BoxDecoration(color: Colors.white),
                             // padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                             width: MediaQuery.of(context).size.width,
                             child: SizedBox(
                               height: 42,
                               child: InkWell(
                                 onTap: () {
-                                  productCheckedList.isNotEmpty ? hanldeCallback() : null;
+                                  productCheckedList.isNotEmpty
+                                      ? hanldeCallback()
+                                      : null;
                                 },
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                      boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                                      gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [
-                                        productCheckedList.isNotEmpty ? MaterialColors.primary : MaterialColors.primary.withOpacity(0.5),
-                                        productCheckedList.isNotEmpty ? Color(0xfff7892b) : Color(0xfff7892b).withOpacity(0.5)
-                                      ])),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                            color: Colors.grey.shade200,
+                                            offset: const Offset(2, 4),
+                                            blurRadius: 5,
+                                            spreadRadius: 2)
+                                      ],
+                                      gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          colors: [
+                                            productCheckedList.isNotEmpty
+                                                ? MaterialColors.primary
+                                                : MaterialColors.primary
+                                                    .withOpacity(0.5),
+                                            productCheckedList.isNotEmpty
+                                                ? Color(0xfff7892b)
+                                                : Color(0xfff7892b)
+                                                    .withOpacity(0.5)
+                                          ])),
                                   child: Text(
                                     'Xác nhận',
                                     style: TextStyle(
                                       fontSize: 16,
                                       height: 1,
-                                      color: productCheckedList.isNotEmpty ? Colors.white : Colors.white.withOpacity(0.5),
+                                      color: productCheckedList.isNotEmpty
+                                          ? Colors.white
+                                          : Colors.white.withOpacity(0.5),
                                       fontFamily: "SF SemiBold",
                                     ),
                                   ),

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:store_app/main.dart';
 import 'package:store_app/screens/app.dart';
 import 'package:store_app/screens/cancel_confirm_order_screen.dart';
+import 'package:store_app/screens/cart_screen.dart';
 import 'package:store_app/screens/change_password_screen.dart';
+import 'package:store_app/screens/create_order.dart';
 import 'package:store_app/screens/login_screen.dart';
 import 'package:store_app/screens/new_product_screen.dart';
 import 'package:store_app/screens/order_history_screen.dart';
@@ -22,6 +24,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => App());
       case '/new-product':
         return MaterialPageRoute(builder: (_) => NewProductScreen());
+      case '/create-order':
+        return MaterialPageRoute(builder: (_) => CreateOrderScreen());
+      case '/cart':
+        return MaterialPageRoute(builder: (_) => CartScreen());
       case '/order-history':
         return MaterialPageRoute(builder: (_) => OrderHistoryScreen());
       case '/cancel-order':

@@ -21,49 +21,57 @@ const Map<TabItem, IconData> tabIcon = {
 };
 
 class BottomNavbar extends StatefulWidget {
-  @override
-  _BottomNavbarState createState() => _BottomNavbarState();
-  late final TabItem currentTab;
-  late final ValueChanged<TabItem> onSelectTab;
+  final TabItem currentTab;
+  final ValueChanged<TabItem> onSelectTab;
 
   BottomNavbar({required this.currentTab, required this.onSelectTab});
+
+  @override
+  _BottomNavbarState createState() => _BottomNavbarState();
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
   BottomNavigationBarItem _buildItem(TabItem tabItem) {
     return BottomNavigationBarItem(
-      icon: Icon(tabIcon[tabItem]),
-      label: tabName[tabItem],
-    );
-  }
-
-  BottomNavigationBarItem _buildNofication(TabItem tabItem) {
-    return BottomNavigationBarItem(
-      icon: Icon(tabIcon[tabItem]),
-      label: tabName[tabItem],
+      icon: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return LinearGradient(
+            colors: const [
+              Color.fromARGB(243, 255, 85, 76),
+              Color.fromARGB(255, 249, 136, 36),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ).createShader(bounds);
+        },
+        child: Icon(
+          tabIcon[tabItem],
+          color: Colors.white, // Màu của biểu tượng
+        ),
+      ),
+      label: tabName[tabItem] ?? "", // Sử dụng tên từ tabName
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType
+          .fixed, // Để các nút cố định và không di chuyển
+      backgroundColor: Colors.white,
       showSelectedLabels: true,
       showUnselectedLabels: true,
+      selectedItemColor: const Color.fromARGB(255, 249, 136, 36),
       unselectedItemColor: Colors.grey,
-      selectedIconTheme: IconThemeData(color: MaterialColors.primary),
-      type: BottomNavigationBarType.fixed,
-      currentIndex: widget.currentTab.index,
-      selectedItemColor: MaterialColors.primary,
       items: [
         _buildItem(TabItem.home),
-        _buildNofication(TabItem.product),
+        _buildItem(TabItem.product),
         _buildItem(TabItem.menu),
-        _buildNofication(TabItem.transaction),
+        _buildItem(TabItem.transaction),
         _buildItem(TabItem.account),
       ],
-      onTap: (index) => widget.onSelectTab(
-        TabItem.values[index],
-      ),
+      currentIndex: widget.currentTab.index,
+      onTap: (index) => widget.onSelectTab(TabItem.values[index]),
     );
   }
 }

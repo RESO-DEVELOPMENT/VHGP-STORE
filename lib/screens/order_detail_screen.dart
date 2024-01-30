@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:store_app/apis/apiService.dart';
 import 'package:store_app/constants/Theme.dart';
 import 'package:store_app/constants/Variable.dart';
+import 'package:store_app/models/notificationModel.dart';
 import 'package:store_app/models/orderDetailModel.dart';
 import 'package:store_app/models/orderModel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -59,7 +61,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   late StreamSubscription fcmListener;
   // PushNotificationModel? _notificationInfo;
-  // FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   getOrderDetail() {
     ApiServices.getOrderDetail(widget.order.id!).then((value) => {
@@ -108,9 +110,20 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    registerNotification();
 
     super.initState();
+    fcmListener = FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      final notification = message.notification;
+      final data = message.data;
+
+      final title = notification?.title ?? 'No Title';
+      final body = notification?.body ?? 'No Body';
+      final customData = data['yourCustomData'];
+
+      print(
+          'Received FCM message: Title: $title, Body: $body, Custom Data: $customData');
+    });
+    registerNotification();
     getOrderDetail();
   }
 
@@ -118,8 +131,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   void dispose() {
     super.dispose();
     print('EVERYTHING disposed');
-    fcmListener.cancel();
-    // other disposes()
+    if (fcmListener != null) {
+      fcmListener.cancel();
+    } // other disposes()
   }
 
   showModal() {
@@ -451,7 +465,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           children: [
                             Container(
                               padding: EdgeInsets.all(15),
-                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.all(10),
+                              width: MediaQuery.of(context).size.width - 20,
                               decoration: BoxDecoration(
                                 color: Color.fromRGBO(238, 220, 171, 1),
                                 borderRadius: BorderRadius.circular(5),

@@ -125,7 +125,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     final currencyFormatter = NumberFormat('#,##0', 'ID');
     return Consumer<AppProvider>(builder: (context, provider, child) {
       return Scaffold(
-        appBar: new AppBar(
+        appBar: AppBar(
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: const LinearGradient(
@@ -135,10 +135,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             ),
           ),
           centerTitle: true,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.white, //change your color here
           ),
-          title: Text(
+          title: const Text(
             "Lịch sử đơn hàng",
             style: TextStyle(
               color: MaterialColors.white,

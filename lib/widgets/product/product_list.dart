@@ -4,6 +4,7 @@ import 'package:store_app/constants/Theme.dart';
 import 'package:store_app/models/productModel.dart';
 import 'package:store_app/widgets/product/product_item.dart';
 
+// ignore: must_be_immutable
 class ProductList extends StatefulWidget {
   List<ProductModel> productList = [];
   final Function(ProductModel product, bool delete)? onTap;

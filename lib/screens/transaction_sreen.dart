@@ -28,8 +28,16 @@ class _TransactionSreenState extends State<TransactionSreen> {
   List<OrderModel> orderListDone = [];
   List<OrderModel> orderListDoneToday = [];
   final currencyFormatter = NumberFormat('#,##0', 'ID');
-  late OrderReportModel orderReportModel = OrderReportModel(totalOrderNew: 0, totalOrderCancel: 0, totalOrderCompleted: 0, totalOrder: 0);
-  late OrderReportPriceModel orderReportPriceModel = OrderReportPriceModel(totalOrder: 0, totalPaymentCash: 0, totalProfitOrder: 0, totalRevenueOrder: 0);
+  late OrderReportModel orderReportModel = OrderReportModel(
+      totalOrderNew: 0,
+      totalOrderCancel: 0,
+      totalOrderCompleted: 0,
+      totalOrder: 0);
+  late OrderReportPriceModel orderReportPriceModel = OrderReportPriceModel(
+      totalOrder: 0,
+      totalPaymentCash: 0,
+      totalProfitOrder: 0,
+      totalRevenueOrder: 0);
   bool isLoading = true;
   late bool isListFull = false;
   late int page = 1;
@@ -37,7 +45,10 @@ class _TransactionSreenState extends State<TransactionSreen> {
     setState(() {
       isLoading = true;
     });
-    var futures = await Future.wait([ApiServices.getOrderReports(storeId, dayFilter), ApiServices.getOrderReportsPrice(storeId, dayFilter)]);
+    var futures = await Future.wait([
+      ApiServices.getOrderReports(storeId, dayFilter),
+      ApiServices.getOrderReportsPrice(storeId, dayFilter)
+    ]);
     if (futures.isNotEmpty) {
       setState(() {
         orderReportModel = futures[0];
@@ -116,7 +127,8 @@ class _TransactionSreenState extends State<TransactionSreen> {
                         inputDate = inputFormat.parse(e.time!),
                         print(e.status),
                         outputDateTime = outputFormatEnd.format(inputDate),
-                        if (outputDateTime.toString() == "${now.day.toString()}/${now.month.toString()}/${now.year.toString()}")
+                        if (outputDateTime.toString() ==
+                            "${now.day.toString()}/${now.month.toString()}/${now.year.toString()}")
                           {
                             setState(() {
                               orderListDoneToday = [...orderListDoneToday, e];
@@ -160,7 +172,10 @@ class _TransactionSreenState extends State<TransactionSreen> {
                   padding: EdgeInsets.only(top: 5, bottom: 5),
                   child: Text(
                     "Tháng 9/2022",
-                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20, fontFamily: "SF Bold"),
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 20,
+                        fontFamily: "SF Bold"),
                   ),
                 ),
               ],
@@ -178,7 +193,10 @@ class _TransactionSreenState extends State<TransactionSreen> {
               children: [
                 Text(
                   "Xem báo cáo tháng này",
-                  style: TextStyle(fontSize: 17, color: MaterialColors.primary, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 17,
+                      color: MaterialColors.primary,
+                      fontWeight: FontWeight.bold),
                 ),
                 Container(
                   child: Icon(
@@ -239,7 +257,8 @@ class _TransactionSreenState extends State<TransactionSreen> {
                           children: [
                             Text(
                               "- 111.111 vnd",
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -280,7 +299,11 @@ class _TransactionSreenState extends State<TransactionSreen> {
                         child: Container(
                           height: 40,
                           width: 40,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(width: 1, color: Color.fromRGBO(230, 230, 230, 1))),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              border: Border.all(
+                                  width: 1,
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
                           child: Center(
                             child: Container(
                               height: 17,
@@ -315,7 +338,8 @@ class _TransactionSreenState extends State<TransactionSreen> {
                         children: [
                           Text(
                             "Rút tiền từ ví về TP Bank",
-                            style: TextStyle(fontFamily: "SF SemiBold", fontSize: 16),
+                            style: TextStyle(
+                                fontFamily: "SF SemiBold", fontSize: 16),
                           ),
                         ],
                       ),
@@ -328,7 +352,10 @@ class _TransactionSreenState extends State<TransactionSreen> {
                         children: [
                           Text(
                             "11:11, 01/01/2022",
-                            style: TextStyle(color: Color.fromRGBO(150, 150, 150, 1), fontFamily: "SF Regular", fontSize: 14),
+                            style: TextStyle(
+                                color: Color.fromRGBO(150, 150, 150, 1),
+                                fontFamily: "SF Regular",
+                                fontSize: 14),
                           ),
                         ],
                       ),
@@ -364,29 +391,42 @@ class _TransactionSreenState extends State<TransactionSreen> {
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
         context: context,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
         builder: (builder) {
-          return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter mystate) {
             return Container(
               height: 220.0,
               child: Column(
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(10.0)),
                       color: Colors.white,
                     ),
                     padding: EdgeInsets.only(top: 15, bottom: 15),
-                    child: Row(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(
-                        "Chọn Khoảng Thời Gian",
-                        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontFamily: "SF Bold", fontSize: 15),
-                      ),
-                    ]),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Chọn Khoảng Thời Gian",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontFamily: "SF Bold",
+                                fontSize: 15),
+                          ),
+                        ]),
                   ),
                   Container(
                       padding: EdgeInsets.only(left: 15, right: 15),
-                      decoration: BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: Color.fromRGBO(240, 240, 240, 1)))),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                              top: BorderSide(
+                                  color: Color.fromRGBO(240, 240, 240, 1)))),
                       child: Column(
                         children: [
                           SizedBox(
@@ -398,7 +438,8 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 filterActive = 1;
                                 dayActive = 1;
                                 Navigator.pop(context);
-                                var storeId = context.read<AppProvider>().getUserId;
+                                var storeId =
+                                    context.read<AppProvider>().getUserId;
                                 DateTime now = DateTime.now();
                                 var formatterDate = DateFormat('dd');
                                 var formatterMonth = DateFormat("MMM");
@@ -406,7 +447,8 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 String actualDate = formatterDate.format(now);
                                 String actualMonth = formatterMonth.format(now);
                                 String actualYear = formatterYear.format(now);
-                                String dayFilter = "${actualMonth} ${actualDate} ${actualYear}";
+                                String dayFilter =
+                                    "${actualMonth} ${actualDate} ${actualYear}";
                                 getOrderReport(storeId, dayFilter);
                               });
                             },
@@ -418,15 +460,25 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                   child: Row(children: [
                                     Text(
                                       "Hôm nay",
-                                      style: TextStyle(color: Color.fromRGBO(120, 120, 120, 1), fontFamily: "SF Medium", fontSize: 16),
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(120, 120, 120, 1),
+                                          fontFamily: "SF Medium",
+                                          fontSize: 16),
                                     ),
                                   ]),
                                 ),
                                 Container(
                                   child: Row(children: [
                                     filterActive == 1
-                                        ? Icon(Icons.radio_button_checked, size: 20, color: Color.fromRGBO(120, 120, 120, 1))
-                                        : Icon(Icons.radio_button_unchecked, size: 20, color: Color.fromRGBO(120, 120, 120, 1)),
+                                        ? Icon(Icons.radio_button_checked,
+                                            size: 20,
+                                            color: Color.fromRGBO(
+                                                120, 120, 120, 1))
+                                        : Icon(Icons.radio_button_unchecked,
+                                            size: 20,
+                                            color: Color.fromRGBO(
+                                                120, 120, 120, 1)),
                                   ]),
                                 )
                               ],
@@ -441,15 +493,18 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 filterActive = 2;
                                 dayActive = 2;
                                 Navigator.pop(context);
-                                var storeId = context.read<AppProvider>().getUserId;
-                                DateTime now = DateTime.now().subtract(Duration(days: 1));
+                                var storeId =
+                                    context.read<AppProvider>().getUserId;
+                                DateTime now =
+                                    DateTime.now().subtract(Duration(days: 1));
                                 var formatterDate = DateFormat('dd');
                                 var formatterMonth = DateFormat("MMM");
                                 var formatterYear = DateFormat("yyyy");
                                 String actualDate = formatterDate.format(now);
                                 String actualMonth = formatterMonth.format(now);
                                 String actualYear = formatterYear.format(now);
-                                String dayFilter = "${actualMonth} ${actualDate} ${actualYear}";
+                                String dayFilter =
+                                    "${actualMonth} ${actualDate} ${actualYear}";
                                 getOrderReport(storeId, dayFilter);
                               });
                             },
@@ -461,15 +516,25 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                   child: Row(children: [
                                     Text(
                                       "Hôm qua",
-                                      style: TextStyle(color: Color.fromRGBO(120, 120, 120, 1), fontFamily: "SF Medium", fontSize: 16),
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(120, 120, 120, 1),
+                                          fontFamily: "SF Medium",
+                                          fontSize: 16),
                                     ),
                                   ]),
                                 ),
                                 Container(
                                   child: Row(children: [
                                     filterActive == 2
-                                        ? Icon(Icons.radio_button_checked, size: 20, color: Color.fromRGBO(120, 120, 120, 1))
-                                        : Icon(Icons.radio_button_unchecked, size: 20, color: Color.fromRGBO(120, 120, 120, 1)),
+                                        ? Icon(Icons.radio_button_checked,
+                                            size: 20,
+                                            color: Color.fromRGBO(
+                                                120, 120, 120, 1))
+                                        : Icon(Icons.radio_button_unchecked,
+                                            size: 20,
+                                            color: Color.fromRGBO(
+                                                120, 120, 120, 1)),
                                   ]),
                                 )
                               ],
@@ -487,13 +552,20 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                   child: Row(children: [
                                     Text(
                                       "Tháng này",
-                                      style: TextStyle(color: Color.fromRGBO(120, 120, 120, 1), fontFamily: "SF Medium", fontSize: 16),
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(120, 120, 120, 1),
+                                          fontFamily: "SF Medium",
+                                          fontSize: 16),
                                     ),
                                   ]),
                                 ),
                                 Container(
                                   child: Row(children: [
-                                    Icon(Icons.radio_button_unchecked, size: 20, color: Color.fromRGBO(120, 120, 120, 1)),
+                                    Icon(Icons.radio_button_unchecked,
+                                        size: 20,
+                                        color:
+                                            Color.fromRGBO(120, 120, 120, 1)),
                                   ]),
                                 )
                               ],
@@ -508,7 +580,8 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 filterActive = 4;
                                 dayActive = 4;
                                 Navigator.pop(context);
-                                var storeId = context.read<AppProvider>().getUserId;
+                                var storeId =
+                                    context.read<AppProvider>().getUserId;
 
                                 getOrderReport(storeId, "");
                               });
@@ -521,15 +594,25 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                   child: Row(children: [
                                     Text(
                                       "Từ trước tới nay",
-                                      style: TextStyle(color: Color.fromRGBO(120, 120, 120, 1), fontFamily: "SF Medium", fontSize: 16),
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(120, 120, 120, 1),
+                                          fontFamily: "SF Medium",
+                                          fontSize: 16),
                                     ),
                                   ]),
                                 ),
                                 Container(
                                   child: Row(children: [
                                     filterActive == 4
-                                        ? Icon(Icons.radio_button_checked, size: 20, color: Color.fromRGBO(120, 120, 120, 1))
-                                        : Icon(Icons.radio_button_unchecked, size: 20, color: Color.fromRGBO(120, 120, 120, 1)),
+                                        ? Icon(Icons.radio_button_checked,
+                                            size: 20,
+                                            color: Color.fromRGBO(
+                                                120, 120, 120, 1))
+                                        : Icon(Icons.radio_button_unchecked,
+                                            size: 20,
+                                            color: Color.fromRGBO(
+                                                120, 120, 120, 1)),
                                   ]),
                                 )
                               ],
@@ -598,7 +681,10 @@ class _TransactionSreenState extends State<TransactionSreen> {
           children: [
             Text(
               getTimeNow(dayActive),
-              style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontFamily: "SF SemiBold", fontSize: 15),
+              style: TextStyle(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontFamily: "SF SemiBold",
+                  fontSize: 15),
             ),
             SizedBox(
               width: 7,
@@ -628,7 +714,8 @@ class _TransactionSreenState extends State<TransactionSreen> {
         children: [
           Text(
             getTimeText(dayActive),
-            style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "SF Medium"),
+            style: TextStyle(
+                color: Colors.black, fontSize: 16, fontFamily: "SF Medium"),
           ),
           SizedBox(
             height: 15,
@@ -636,12 +723,20 @@ class _TransactionSreenState extends State<TransactionSreen> {
           Row(
             children: [
               Text(
-                currencyFormatter.format((orderReportPriceModel.totalOrder!).toInt()).toString(),
-                style: TextStyle(color: MaterialColors.primary, fontSize: 24, fontFamily: "SF Bold"),
+                currencyFormatter
+                    .format((orderReportPriceModel.totalOrder!).toInt())
+                    .toString(),
+                style: TextStyle(
+                    color: MaterialColors.primary,
+                    fontSize: 24,
+                    fontFamily: "SF Bold"),
               ),
               Text(
                 " ₫",
-                style: TextStyle(color: MaterialColors.primary, fontSize: 18, fontFamily: "SF Medium"),
+                style: TextStyle(
+                    color: MaterialColors.primary,
+                    fontSize: 18,
+                    fontFamily: "SF Medium"),
               ),
             ],
           ),
@@ -666,11 +761,13 @@ class _TransactionSreenState extends State<TransactionSreen> {
                     children: [
                       Text(
                         orderReportModel.totalOrderCompleted.toString(),
-                        style: TextStyle(color: Color.fromRGBO(80, 80, 80, 1), fontSize: 14),
+                        style: TextStyle(
+                            color: Color.fromRGBO(80, 80, 80, 1), fontSize: 14),
                       ),
                       Text(
                         " đơn hàng hoàn tất",
-                        style: TextStyle(color: Color.fromRGBO(80, 80, 80, 1), fontSize: 14),
+                        style: TextStyle(
+                            color: Color.fromRGBO(80, 80, 80, 1), fontSize: 14),
                       ),
                     ],
                   ),
@@ -690,9 +787,22 @@ class _TransactionSreenState extends State<TransactionSreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(8)),
-                          boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                          gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)])),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: Colors.grey.shade200,
+                                offset: const Offset(2, 4),
+                                blurRadius: 5,
+                                spreadRadius: 2)
+                          ],
+                          gradient: const LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Color.fromARGB(243, 255, 85, 76),
+                                Color.fromARGB(255, 249, 136, 36)
+                              ])),
                       child: const Text(
                         'Xem chi tiết',
                         style: TextStyle(
@@ -784,13 +894,20 @@ class _TransactionSreenState extends State<TransactionSreen> {
           automaticallyImplyLeading: false,
           // backgroundColor: Color.fromARGB(255, 255, 255, 255),
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "Lịch sử",
-            style: TextStyle(color: MaterialColors.white, fontFamily: "SF Bold"),
+            style:
+                TextStyle(color: MaterialColors.white, fontFamily: "SF Bold"),
           ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)]),
+              gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color.fromARGB(243, 255, 85, 76),
+                    Color.fromARGB(255, 249, 136, 36)
+                  ]),
             ),
           ),
           // bottom:
@@ -861,7 +978,10 @@ class _TransactionSreenState extends State<TransactionSreen> {
                           Container(
                             child: Text(
                               "Tổng kết doanh thu",
-                              style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontFamily: "SF Bold", fontSize: 20),
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontFamily: "SF Bold",
+                                  fontSize: 20),
                             ),
                           ),
                           statistical_order(),
@@ -889,7 +1009,10 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                   padding: EdgeInsets.all(15),
                                   child: Text(
                                     "Tổng kết đơn hàng",
-                                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontFamily: "SF Bold", fontSize: 20),
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontFamily: "SF Bold",
+                                        fontSize: 20),
                                   ),
                                 ),
                               )
@@ -906,22 +1029,38 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 Expanded(
                                     flex: 1,
                                     child: Container(
-                                      padding: EdgeInsets.only(left: 15, bottom: 15, top: 15),
-                                      decoration: BoxDecoration(color: Color.fromRGBO(240, 240, 240, 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                                      padding: EdgeInsets.only(
+                                          left: 15, bottom: 15, top: 15),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              Color.fromRGBO(240, 240, 240, 1),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            orderReportModel.totalOrder.toString(),
-                                            style: TextStyle(fontFamily: "SF Bold", fontSize: 18, color: Color.fromRGBO(50, 50, 50, 1)),
+                                            orderReportModel.totalOrder
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontFamily: "SF Bold",
+                                                fontSize: 18,
+                                                color: Color.fromRGBO(
+                                                    50, 50, 50, 1)),
                                           ),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(
                                             "Tổng đơn hàng",
-                                            style: TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
+                                            style: TextStyle(
+                                                fontFamily: "SF Regular",
+                                                fontSize: 15,
+                                                color: Color.fromRGBO(
+                                                    50, 50, 50, 1)),
                                           )
                                         ],
                                       ),
@@ -932,22 +1071,39 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 Expanded(
                                   flex: 1,
                                   child: Container(
-                                    decoration: BoxDecoration(color: Color.fromRGBO(240, 240, 240, 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    decoration: BoxDecoration(
+                                        color: Color.fromRGBO(240, 240, 240, 1),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Text(orderReportModel.totalOrderNew.toString(), style: TextStyle(fontFamily: "SF Bold", fontSize: 18, color: Color.fromRGBO(50, 50, 50, 1))),
+                                        Text(
+                                            orderReportModel.totalOrderNew
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontFamily: "SF Bold",
+                                                fontSize: 18,
+                                                color: Color.fromRGBO(
+                                                    50, 50, 50, 1))),
                                         SizedBox(
                                           height: 5,
                                         ),
                                         Text(
                                           "Đơn hàng mới",
-                                          style: TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
+                                          style: TextStyle(
+                                              fontFamily: "SF Regular",
+                                              fontSize: 15,
+                                              color: Color.fromRGBO(
+                                                  50, 50, 50, 1)),
                                         )
                                       ],
                                     ),
-                                    padding: EdgeInsets.only(left: 15, bottom: 15, top: 15),
+                                    padding: EdgeInsets.only(
+                                        left: 15, bottom: 15, top: 15),
                                   ),
                                 ),
                               ],
@@ -967,22 +1123,38 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 Expanded(
                                     flex: 1,
                                     child: Container(
-                                      padding: EdgeInsets.only(left: 15, bottom: 15, top: 15),
-                                      decoration: BoxDecoration(color: Color.fromRGBO(240, 240, 240, 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                                      padding: EdgeInsets.only(
+                                          left: 15, bottom: 15, top: 15),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              Color.fromRGBO(240, 240, 240, 1),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            orderReportModel.totalOrderCompleted.toString(),
-                                            style: TextStyle(fontFamily: "SF Bold", fontSize: 18, color: Color.fromRGBO(50, 50, 50, 1)),
+                                            orderReportModel.totalOrderCompleted
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontFamily: "SF Bold",
+                                                fontSize: 18,
+                                                color: Color.fromRGBO(
+                                                    50, 50, 50, 1)),
                                           ),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(
                                             "Đơn đơn thành công",
-                                            style: TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
+                                            style: TextStyle(
+                                                fontFamily: "SF Regular",
+                                                fontSize: 15,
+                                                color: Color.fromRGBO(
+                                                    50, 50, 50, 1)),
                                           )
                                         ],
                                       ),
@@ -993,22 +1165,39 @@ class _TransactionSreenState extends State<TransactionSreen> {
                                 Expanded(
                                   flex: 1,
                                   child: Container(
-                                    decoration: BoxDecoration(color: Color.fromRGBO(240, 240, 240, 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    decoration: BoxDecoration(
+                                        color: Color.fromRGBO(240, 240, 240, 1),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Text(orderReportModel.totalOrderCancel.toString(), style: TextStyle(fontFamily: "SF Bold", fontSize: 18, color: Color.fromRGBO(50, 50, 50, 1))),
+                                        Text(
+                                            orderReportModel.totalOrderCancel
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontFamily: "SF Bold",
+                                                fontSize: 18,
+                                                color: Color.fromRGBO(
+                                                    50, 50, 50, 1))),
                                         SizedBox(
                                           height: 5,
                                         ),
                                         Text(
                                           "Đơn hàng thất bại",
-                                          style: TextStyle(fontFamily: "SF Regular", fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
+                                          style: TextStyle(
+                                              fontFamily: "SF Regular",
+                                              fontSize: 15,
+                                              color: Color.fromRGBO(
+                                                  50, 50, 50, 1)),
                                         )
                                       ],
                                     ),
-                                    padding: EdgeInsets.only(left: 15, bottom: 15, top: 15),
+                                    padding: EdgeInsets.only(
+                                        left: 15, bottom: 15, top: 15),
                                   ),
                                 ),
                               ],
@@ -1025,12 +1214,26 @@ class _TransactionSreenState extends State<TransactionSreen> {
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
-                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                    boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: const Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                                    gradient: const LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [MaterialColors.primary, Color(0xfff7892b)])),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Colors.grey.shade200,
+                                          offset: const Offset(2, 4),
+                                          blurRadius: 5,
+                                          spreadRadius: 2)
+                                    ],
+                                    gradient: const LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Color.fromARGB(243, 255, 85, 76),
+                                          Color.fromARGB(255, 249, 136, 36)
+                                        ])),
                                 child: const Text(
                                   'Xem chi tiết',
                                   style: TextStyle(
